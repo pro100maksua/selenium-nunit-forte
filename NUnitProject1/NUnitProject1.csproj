@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="AutomationPracticeTests.cs" />
     <Compile Include="CodeAcademyTests.cs" />
+    <Compile Include="KpizTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
