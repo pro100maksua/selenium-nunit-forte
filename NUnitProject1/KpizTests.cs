@@ -23,7 +23,7 @@ namespace NUnitProject1
                 "--disable-application-cache"
             );
             _driver = new ChromeDriver(options);
-            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
             _driver.Navigate().GoToUrl("https://www.goldtoe.com/");
 
             ClosePopup();
@@ -65,11 +65,24 @@ namespace NUnitProject1
         {
             _driver.FindElement(By.XPath("//*[@id=\"top-tools-div\"]/ul/li[1]")).Click();
 
-            var email = _driver.FindElement(By.XPath("//*[@id=\"main\"]/div[1]/form/div[1]/input"));
-            email.SendKeys("maksim741@ukr.net");
+            var email = "qopofpain1@gmail.com";
+            var password = "Pass123!";
+            try
+            {
+                var emailInput = _driver.FindElement(By.XPath("//*[@id=\"main\"]/div[1]/form/div[1]/input"));
+                emailInput.SendKeys(email);
 
-            var password = _driver.FindElement(By.XPath("//*[@id=\"main\"]/div[1]/form/div[2]/input"));
-            password.SendKeys("Pass123!");
+                var passwordInput = _driver.FindElement(By.XPath("//*[@id=\"main\"]/div[1]/form/div[2]/input"));
+                passwordInput.SendKeys(password);
+            }
+            catch (NoSuchElementException)
+            {
+                var emailInput = _driver.FindElement(By.XPath("//*[@id=\"main\"]/div[1]/form/div[1]/div/input"));
+                emailInput.SendKeys(email);
+
+                var passwordInput = _driver.FindElement(By.XPath("//*[@id=\"main\"]/div[1]/form/div[2]/div/input"));
+                passwordInput.SendKeys(password);
+            }
 
             _driver.FindElement(By.XPath("//*[@id=\"main\"]/div[1]/form/div[3]/div[2]/button")).Click();
         }
@@ -77,11 +90,11 @@ namespace NUnitProject1
         [Test]
         public void LoginTest()
         {
-            var greeting = _driver.FindElement(By.XPath("//*[@id=\"top-tools-div\"]/ul/li[2]/a/span"));
-            var wait = new DefaultWait<IWebElement>(greeting) { Timeout = TimeSpan.FromSeconds(10) };
+            var name = _driver.FindElement(By.XPath("//*[@id=\"top-tools-div\"]/ul/li[2]/a/span/span"));
+            var wait = new DefaultWait<IWebElement>(name) { Timeout = TimeSpan.FromSeconds(10) };
             wait.Until(e => !string.IsNullOrWhiteSpace(e.Text));
 
-            Assert.AreEqual("Hi, Maksym", greeting.Text);
+            Assert.AreEqual("Maksym", name.Text);
         }
 
         [Test]
